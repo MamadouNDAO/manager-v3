@@ -1,0 +1,280 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">{{titreTop}}</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreSalle(metricFiltre)" type="text" placeholder="Rechercher dans statistique">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+         <!-- <span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img (click)="showSupp()" class="grised6" src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <div class="option-on-top on-dashboard">
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de début</span>
+            <span (click)="ouvrePopupDate('p1')" class="metric">{{beforeday | date: "dd MMMM YYYY" }}</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" (click)="ouvrePopupDate('p1')" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de fin</span>
+            <span (click)="ouvrePopupDate('p2')" class="metric">{{today | date: "dd MMMM YYYY" }}</span>
+          </div>
+          <img (click)="ouvrePopupDate('p2')" src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Entite</span>
+            <input #inputEntite (input)="haveChange(inputEntite)" [matAutocomplete]="autoE" type="text" value="Iviplay">
+          </div>
+          <mat-autocomplete (optionSelected)="haveChange(inputEntite)" #autoE="matAutocomplete" >
+            <mat-option *ngFor="let option of listEntity" [value]="option" >
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <img (click)="inputEntite.focus()" src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">OS</span>
+           <!--- <span class="metric">Android</span>-->
+            <input #inputOS  [matAutocomplete]="autoP" type="text" value="Tous les OS">
+          </div>
+          <mat-autocomplete (optionSelected)="haveChange(inputOS)" #autoP="matAutocomplete" >
+            <mat-option *ngFor="let option of listOs" [value]="option" >
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <img (click)="inputOS.focus()" src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Terminal</span>
+            <input #inputTerminal (input)="haveChange(inputTerminal)" [matAutocomplete]="autoD" type="text" value="Samsung">
+          </div>
+          <mat-autocomplete (optionSelected)="haveChange(inputTerminal)" #autoD="matAutocomplete" >
+            <mat-option *ngFor="let option of listTerminal" [value]="option" >
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+      </div>
+      <div [class]="'marg-t-20 my-tab-group'">
+        <div class="header-tab">
+          <div (click)="changeTabs('list')" [ngClass]="isListe ? theme.bgColor : ''" class="tab">Liste</div>
+          <div (click)="changeTabs('card')" [ngClass]="isCard ? theme.bgColor : ''" class="tab">Carte</div>
+          <div (click)="changeTabs('graphe')" [ngClass]="isGraphe ? theme.bgColor : ''" class="tab">Graphique</div>
+        </div>
+
+        <div class="content-tab" *ngIf="isListe">
+          <table class="table-principal">
+            <thead class="tr-table">
+            <tr>
+              <th [ngClass]="ent === 'Metrique' ? 'th-met' : ''" class="th-table " *ngFor="let ent of enteteTable">
+                <div>
+                  <span>{{ent}}</span>
+                  <img (click)="sortData(getNameSort(ent))" *ngIf="ent != 'Action'" src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr (click)="selectItem(i)" [ngClass]="item.selected ? theme.bgColor : ''"  class="tr-table" *ngFor="let item of filteredStat | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+              <td  class="td-table th-met">{{item.metrique}}</td>
+              <td  class="td-table">{{item.mesure}}</td>
+              <td  class="td-table">{{item.unite}}</td>
+              <td  class="td-table">{{item.entite}}</td>
+              <td *ngIf="enteteTable.includes('OS')"  class="td-table">{{item.os}}</td>
+              <td *ngIf="enteteTable.includes('Terminal')"  class="td-table">{{item.terminal}}</td>
+              <!--<td *ngIf="enteteTable.includes('Usager')" class="td-table">{{item.usager}}</td>-->
+              <td  class="td-table">{{item.date | date: "EE dd MMM yyy"}}</td>
+              <!--<td *ngIf="enteteTable.includes('Terminal')" class="td-table">{{item.terminal}}</td>-->
+
+              <td class="td-table th-action" (click)="displaydesc(item.codeDesc)">
+                <div class="td-action">
+                  <img  src="assets/icon/stat/info.svg" alt="">
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+
+          </table>
+          <div class="tr-paginator">
+            <div class="option-on-bottom">
+              <span>{{total}} Metriques</span>
+              <div class="my-paginator">
+                <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+                <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+                <div class="list-page">
+                  <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+                </div>
+                <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+                <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="content-tab" *ngIf="isCard">
+          <div class="contenu-card">
+            <div class="card" *ngFor="let item of metricCard">
+              <img [src]="'assets/icon/stat/noir/'+item.image+'.svg'" alt="">
+              <span class="lib-card">{{ item.title }}</span>
+              <span class="lib-number">{{ item.count }}</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="content-tab" *ngIf="isGraphe">
+          <div  class="chart-cadre">
+            <div class="prt-1">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart1+'.svg'" alt="">
+                <span >{{titreChart1}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-1" class="elem-chart"></canvas>
+            </div>
+            <div class="prt-1">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart2+'.svg'" alt="">
+                <span >{{titreChart2}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-2" class="elem-chart"></canvas>
+            </div>
+            <div class="prt-1" *ngIf="chartsToGenere.length > 2">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart3+'.svg'" alt="">
+                <span >{{titreChart3}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-3" class="elem-chart"></canvas>
+            </div>
+
+            <div  class="prt-1" *ngIf="chartsToGenere.length > 3">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart4+'.svg'" alt="">
+                <span >{{titreChart4}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-4" class="elem-chart"></canvas>
+            </div>
+
+            <div  class="prt-1" *ngIf="chartsToGenere.length > 4">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart5+'.svg'" alt="">
+                <span >{{titreChart5}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-5" class="elem-chart"></canvas>
+            </div>
+
+            <div  class="prt-1" *ngIf="chartsToGenere.length > 5">
+              <div class="elem-top">
+                <img [src]="'assets/icon/stat/noir/'+iconChart6+'.svg'" alt="">
+                <span >{{titreChart6}}</span>
+                <span class="bolder-ft"></span>
+              </div>
+
+              <canvas id="chart-6" class="elem-chart"></canvas>
+            </div>
+
+
+
+
+
+
+          </div>
+          <br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-calendar" *ngIf="isPopupdate">
+    <div class="bloc-card animate__animated animate__fadeInDown">
+      <div class="circle-close" (click)="closePopupDate()">
+        <img src="assets/icon/noir/close.png" alt="">
+      </div>
+      <div class="card-calender" *ngIf="popupDate == 'p1'">
+        <mat-calendar [maxDate]="maxDate" class="iviplay-calendar" [(selected)]="beforeday"></mat-calendar>
+
+        <div class="contenus-btn">
+          <button (click)="confirmeSelectDate()">Confirmer</button>
+        </div>
+      </div>
+
+      <div class="card-calender" *ngIf="popupDate == 'p2'">
+        <mat-calendar [minDate]="beforeday" [maxDate]="maxDate" class="iviplay-calendar" [(selected)]="today"></mat-calendar>
+
+        <div class="contenus-btn">
+          <button (click)="confirmeSelectDate()">Confirmer</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="popup-descriptif" *ngIf="isDesc">
+  <div class="cadre-desc animate__animated animate__backInDown" >
+    <div class="circle-close-desc" (click)="closeDesc()">
+      <img src="assets/icon/noir/close.png">
+    </div>
+
+    <div class="card-desc">
+      <span class="titre-desc">Descriptif de la statistique</span>
+      <span>
+       {{descriptifStat}}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="popup-support" *ngIf="isSupport">
+  <div class="card-notification-act">
+    <div class="header-notif">
+      <span>Support</span>
+      <mat-icon (click)="showSupp()" class="icon-password" fontSet="material-icons-outlined">close</mat-icon>
+    </div>
+    <div class="content-notif">
+      <div class="item-i-u">
+        <img src="assets/icon/organisation.png" alt="">
+        <span>Iviplay</span>
+      </div>
+      <div class="item-i-u">
+        <img src="assets/icon/admin.png" alt="">
+        <span>Support</span>
+      </div>
+      <div class="item-i-u">
+        <img src="assets/icon/mail.png" alt="">
+        <span>support@iviplay.com</span>
+      </div>
+    </div>
+  </div>
+</div>

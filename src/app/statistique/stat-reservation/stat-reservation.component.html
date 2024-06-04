@@ -1,0 +1,64 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Statistique de reservation</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input type="text" placeholder="Rechercher">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img src="assets/icon/menu/blanc/notification.svg" alt="">
+          <span [class]="theme.bgColor+' counter-notif'">11</span>
+        </div>
+        <img src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <div class="option-on-top on-dashboard" *ngIf="activeFiltre">
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de début</span>
+            <span class="metric">{{beforeday | date: "dd MMMM YYYY" }}</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de fin</span>
+            <span class="metric">{{today | date: "dd MMMM YYYY" }}</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Entite</span>
+            <span class="metric">Iviplay</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">OS</span>
+            <span class="metric">Android</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Terminal</span>
+            <span class="metric">Samsumg</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+      </div>
+      <app-data-reservation></app-data-reservation>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Gestion des utilisateurs</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreData(metricFiltre)" type="text" placeholder="Rechercher dans gestion des utilisateurs">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+          <!--<span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <table class="table-principal">
+        <thead class="tr-table">
+        <tr>
+          <th class="th-table th-met">
+            <div>
+              <span>Societe</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Prenom</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Nom</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Poste</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Email</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Telephone</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Profil</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Activation</span>
+
+            </div>
+          </th>
+          <th class="th-table th-grp">
+            <div>
+              <span>Actions</span>
+
+            </div>
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr   class="tr-table" *ngFor="let item of suggestionUsers | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+          <td  class="td-table th-met">{{item.societe}}</td>
+          <td  class="td-table">{{item.prenom}}</td>
+          <td  class="td-table">{{item.nom}}</td>
+          <td  class="td-table">{{item.poste}}</td>
+          <td  class="td-table">{{item.email}}</td>
+          <td  class="td-table">{{item.telephone}}</td>
+          <td  class="td-table">{{item.profil}}</td>
+          <td   class="td-table th-img-bool">
+            <img  (click)="toggleItem(i)" class="icon-toggle"  [src]="item.isActif ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img  src="assets/icon/tableau/pen.svg" alt="">
+              <img   src="assets/icon/tableau/delete.svg" alt="">
+            </div>
+          </td>
+        </tr>
+        <tr  class="tr-table">
+          <td  class="td-table th-met th-grise">Societe</td>
+          <td  class="td-table th-grise">Prenom</td>
+          <td  class="td-table th-grise">Nom</td>
+          <td  class="td-table th-grise">Poste</td>
+          <td  class="td-table th-grise">Email</td>
+          <td  class="td-table th-grise">Telephone</td>
+          <td  class="td-table th-grise">Profil</td>
+          <td   class="td-table th-img-bool">
+            <img  class="icon-toggle th-grise"  [src]="'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img  src="assets/icon/tableau/plus.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+
+        </tbody>
+
+      </table>
+
+      <div class="tr-paginator">
+        <div class="option-on-bottom">
+          <span>{{total}} Utilisateurs</span>
+          <div class="my-paginator">
+            <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+            <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+            <div class="list-page">
+              <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+            </div>
+            <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+            <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

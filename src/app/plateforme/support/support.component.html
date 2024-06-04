@@ -1,0 +1,95 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Gestion support</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreData(metricFiltre)" type="text" placeholder="Rechercher dans gestion support">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+          <!--<span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <table class="table-principal">
+        <thead class="tr-table">
+        <tr>
+          <th class="th-table th-met">
+            <div>
+              <span>Societe</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Email</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table ">
+            <div>
+              <span>Numero fixe</span>
+
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Numero mobile</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table ">
+            <div>
+              <span>Lien</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table ">
+            <div>
+              <span>Actions</span>
+
+            </div>
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr    class="tr-table" *ngFor="let item of supports; index as i">
+          <td  class="td-table th-met">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.societe" placeholder="societe">
+          </td>
+          <td  class="td-table">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.email" placeholder="email">
+          </td>
+          <td  class="td-table">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.fixe" placeholder="numero fixe">
+          </td>
+          <td  class="td-table">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.mobile" placeholder="numero mobile">
+          </td>
+          <td  class="td-table">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.lien" placeholder="lien">
+          </td>
+
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img *ngIf="!item.isEdit" (click)="editor(i)" src="assets/icon/tableau/pen.svg" alt="">
+              <img *ngIf="item.isEdit" (click)="validerEditor(i)" src="assets/icon/tableau/validedit.svg" alt="">
+              <img *ngIf="item.isEdit" (click)="annuleEditor(i)" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>

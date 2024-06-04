@@ -1,0 +1,130 @@
+<div class="my-tab-group">
+  <div class="header-tab">
+    <div (click)="changeTabs('list')" [ngClass]="isListe ? theme.bgColor : ''" class="tab">Liste</div>
+    <div (click)="changeTabs('card')" [ngClass]="isCard ? theme.bgColor : ''" class="tab">Carte</div>
+    <div (click)="changeTabs('graphe')" [ngClass]="isGraphe ? theme.bgColor : ''" class="tab">Graphique</div>
+    <div (click)="changeTabs('alerte')" [ngClass]="isAlert ? theme.bgColor : ''" class="tab">Alertes</div>
+  </div>
+
+  <div class="content-tab" *ngIf="isListe">
+    <table class="table-principal">
+      <thead class="tr-table">
+      <tr>
+        <th class="th-table">
+          <div>
+            <span>Motif</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Espace</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Etage</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Site</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Entité</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Gravité</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table th-action">
+          <div>
+            <span>Actions</span>
+          </div>
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr (click)="selectItem(i)" [ngClass]="item.selected ? theme.bgColor : ''" class="tr-table" *ngFor="let item of alarmes | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+        <td  class="td-table">{{item.motif}}</td>
+        <td  class="td-table">{{item.espace}}</td>
+        <td  class="td-table">{{item.etage}}</td>
+        <td  class="td-table">{{item.site}}</td>
+        <td  class="td-table">{{item.entite}}</td>
+        <td  class="td-table">{{item.gravite}}</td>
+        <td  class="td-table th-action">
+          <div class="td-action">
+            <img  [src]="item.selected ? 'assets/icon/tableau/blanc/incident.png' : 'assets/icon/tableau/noir/incident.png'" alt="">
+            <img [src]="item.selected ? 'assets/icon/tableau/blanc/localisation.png' : 'assets/icon/tableau/noir/localisation.png'" alt="">
+            <img [src]="item.selected ? 'assets/icon/tableau/blanc/calendar.png' : 'assets/icon/tableau/noir/calendar.png'" alt="">
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+
+    </table>
+    <div class="tr-paginator">
+      <div class="option-on-bottom">
+        <span>{{total}} alarmes</span>
+        <div class="my-paginator">
+          <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+          <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+          <div class="list-page">
+            <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+          </div>
+          <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+          <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isCard">
+    <div class="contenu-card">
+      <div class="card" *ngFor="let item of alarmCard">
+        <img [src]="'assets/icon/dashboard/'+item.image+'.svg'" alt="">
+        <span class="lib-card">{{ item.title }}</span>
+        <span class="lib-number">{{ item.count }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isGraphe">
+    <!--<div id="container-chart" class="my-chart">
+
+    </div>-->
+    <div class="cadre-of-charts">
+      <div class="card-item-chart" *ngFor="let item of alarmCard">
+        <div class="top-data">
+          <img [src]="'assets/icon/dashboard/'+item.image+'.svg'" alt="">
+          <span class="lib-card">{{ item.title }}</span>
+          <span class="lib-number">{{ item.count }}</span>
+        </div>
+        <canvas id="{{item.idChart}}" class="data-chart" >
+
+        </canvas>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isAlert">
+
+  </div>
+</div>
+
+

@@ -1,0 +1,265 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Statistiques de flux</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreSalle(metricFiltre)" type="text" placeholder="Rechercher sur statistiques de flux">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img src="assets/icon/menu/blanc/notification.svg" alt="">
+          <span [class]="theme.bgColor+' counter-notif'">11</span>
+        </div>
+        <img src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <div class="option-on-top on-dashboard">
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de début</span>
+            <span class="metric">10 novembre 2023</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Date de fin</span>
+            <span class="metric">10 novembre 2023</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Entite</span>
+            <span class="metric">Iviplay</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">OS</span>
+            <span class="metric">Android</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+        <div class="item-metric">
+          <div class="on-left">
+            <span class="title-metric">Terminal</span>
+            <span class="metric">Samsumg</span>
+          </div>
+          <img src="assets/icon/stat/chevron.svg" alt="">
+        </div>
+      </div>
+      <div [class]="hauteurTab+' my-tab-group'">
+        <div class="header-tab">
+          <div (click)="changeTabs('list')" [ngClass]="isListe ? theme.bgColor : ''" class="tab">Liste</div>
+          <div (click)="changeTabs('card')" [ngClass]="isCard ? theme.bgColor : ''" class="tab">Carte</div>
+          <div (click)="changeTabs('graphe')" [ngClass]="isGraphe ? theme.bgColor : ''" class="tab">Graphique</div>
+        </div>
+
+        <div class="content-tab" *ngIf="isListe">
+          <table class="table-principal">
+            <thead class="tr-table">
+            <tr>
+              <th class="th-table th-met">
+                <div>
+                  <span>Metrique</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table">
+                <div>
+                  <span>Entite</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table">
+                <div>
+                  <span>Os</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table">
+                <div>
+                  <span>Usager</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table">
+                <div>
+                  <span>Date</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table">
+                <div>
+                  <span>Mesure</span>
+                  <img src="assets/icon/tree.png" alt="">
+                </div>
+              </th>
+              <th class="th-table th-action">
+                <div>
+                  <span></span>
+                </div>
+              </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr (click)="selectItem(i)" [ngClass]="item.selected ? theme.bgColor : ''" class="tr-table" *ngFor="let item of suggestionStat | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+              <td  class="td-table th-met">{{item.metrique}}</td>
+              <td  class="td-table">{{item.entite}}</td>
+              <td  class="td-table">{{item.os}}</td>
+              <td  class="td-table">{{item.usager}}</td>
+              <td  class="td-table">{{item.date}}</td>
+              <td  class="td-table">{{item.mesure}}</td>
+              <td  class="td-table th-action">
+                <div class="td-action">
+                  <img  src="assets/icon/stat/info.svg" alt="">
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+
+          </table>
+          <div class="tr-paginator">
+            <div class="option-on-bottom">
+              <span>{{total}} Metriques</span>
+              <div class="my-paginator">
+                <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+                <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+                <div class="list-page">
+                  <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+                </div>
+                <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+                <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="content-tab" *ngIf="isCard">
+          <div class="contenu-card">
+            <div class="card" *ngFor="let item of statsCard">
+              <img [src]="'assets/icon/stat/noir/'+item.image+'.svg'" alt="">
+              <span class="lib-card">{{ item.title }}</span>
+              <span class="lib-number">{{ item.count }}</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="content-tab" *ngIf="isGraphe">
+          <div  class="chart-cadre">
+            <div class="prt-1">
+              <div class="elem-top">
+                <img src="assets/icon/stat/noir/micro-localisation.svg" alt="">
+                <span class="bolder-ft">456 Micro-localisation</span>
+              </div>
+
+              <canvas id="chart-micro-localisation" class="elem-chart">
+
+              </canvas>
+
+              <div class="champ-select">
+                <input type="text" value="Par espace" [matAutocomplete]="autoP">
+                <mat-autocomplete #autoP="matAutocomplete" >
+                  <mat-option *ngFor="let option of espace" [value]="option" >
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <img src="assets/icon/stat/noir/fleche-select.svg" alt="">
+              </div>
+              <div class="champ-list">
+                <span *ngFor="let item of espace">{{item}}</span>
+              </div>
+            </div>
+            <div class="prt-1">
+              <div class="elem-top">
+                <img src="assets/icon/stat/noir/proximite.svg" alt="">
+
+                <span class="bolder-ft">475 Detection de proximite</span>
+              </div>
+
+              <canvas id="chart-proximite" class="elem-chart">
+
+              </canvas>
+              <div class="champ-select">
+                <input type="text" value="Par espace" [matAutocomplete]="autoP2">
+                <mat-autocomplete #autoP2="matAutocomplete" >
+                  <mat-option *ngFor="let option of espace" [value]="option" >
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <img src="assets/icon/stat/noir/fleche-select.svg" alt="">
+              </div>
+              <div class="champ-list">
+                <span *ngFor="let item of espace">{{item}}</span>
+              </div>
+            </div>
+            <div class="prt-1">
+              <div class="elem-top">
+                <img src="assets/icon/stat/noir/geofencing.svg" alt="">
+
+                <span class="bolder-ft">476 Geofencing</span>
+              </div>
+
+              <canvas id="chart-geofencing" class="elem-chart">
+
+              </canvas>
+              <div class="champ-select">
+                <input type="text" value="Par espace" [matAutocomplete]="autoP3">
+                <mat-autocomplete #autoP3="matAutocomplete" >
+                  <mat-option *ngFor="let option of espace" [value]="option" >
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <img src="assets/icon/stat/noir/fleche-select.svg" alt="">
+              </div>
+              <div class="champ-list">
+                <span *ngFor="let item of espace">{{item}}</span>
+              </div>
+            </div>
+
+            <div class="prt-1">
+              <div class="elem-top">
+                <img src="assets/icon/stat/noir/frequentation.svg" alt="">
+
+                <span class="bolder-ft">475 Frequentation</span>
+              </div>
+
+              <canvas id="chart-frequentation" class="elem-chart">
+
+              </canvas>
+              <div class="champ-select">
+                <input type="text" value="Par salle" [matAutocomplete]="autoP4">
+                <mat-autocomplete #autoP4="matAutocomplete" >
+                  <mat-option *ngFor="let option of salles" [value]="option" >
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <img src="assets/icon/stat/noir/fleche-select.svg" alt="">
+              </div>
+              <div class="champ-list">
+                <span *ngFor="let item of salles">{{item}}</span>
+              </div>
+            </div>
+
+          </div>
+          <br><br>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

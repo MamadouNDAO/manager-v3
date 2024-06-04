@@ -1,0 +1,259 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">{{titre}}</span>
+      <div class="part-input-search" *ngIf="!isTableFormulaire">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreSalle(metricFiltre)" type="text" placeholder="Rechercher">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+         <!-- <span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img class="grised" src="assets/icon/menu/blanc/support-left.svg" alt="">
+        <img *ngIf="isTableFormulaire" (click)="closeForm()" [src]="'assets/icon/menu/gris/setting.svg' " alt="">
+        <img *ngIf="!isTableFormulaire" (click)="gotoForm()" [src]="'assets/icon/menu/blanc/setting-left.svg'" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord " >
+      <div class="top-of-btn" *ngIf="!isTableFormulaire">
+        <div class="btn-actions" (click)="gotoForm()">
+          <img src="assets/icon/gestion_form.svg" alt="">
+          <span>Gestion du formulaire</span>
+        </div>
+
+        <div class="btn-actions">
+          <img src="assets/icon/import_list.svg" alt="">
+          <span>Importer la liste blanche</span>
+        </div>
+      </div>
+
+      <table class="table-principal" *ngIf="!isTableFormulaire">
+        <thead class="tr-table">
+        <tr >
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Application</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th" >
+            <div>
+              <span>Prenom</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th" >
+            <div>
+              <span>Nom</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Email</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Domaine</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-5" >
+            <div>
+              <span>Societe</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Entite</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-date" >
+            <div>
+              <span>Date inscription</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+
+
+
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Action</span>
+
+            </div>
+          </th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr   class="tr-table" *ngFor="let item of suggestionData; index as i">
+          <td  class="td-table little-th-3">
+           <input [readonly]="!item.isEdit" [(ngModel)]="item.app" class="input-name-champ-1" type="text" placeholder="application">
+          </td>
+          <td  class="td-table little-th">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.prenom" class="input-name-champ-1" type="text" placeholder="prenom">
+          </td>
+          <td  class="td-table little-th">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.nom" class="input-name-champ-1" type="text" placeholder="nom">
+          </td>
+          <td  class="td-table little-th-3">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.email" class="input-name-champ-1" type="text" placeholder="email">
+          </td>
+          <td  class="td-table little-th-3">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.domaine" class="input-name-champ-1" type="text" placeholder="domaine">
+          </td>
+          <td  class="td-table little-th-5">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.societe" class="input-name-champ-1" type="text" placeholder="societe">
+          </td>
+          <td  class="td-table little-th-4">
+            <input [readonly]="!item.isEdit" [(ngModel)]="item.entite" class="input-name-champ-1" type="text" placeholder="entite">
+          </td>
+          <td  class="td-table little-th-date">
+            {{item.inscritAt | date: "EE dd MMM yyyy"}}
+          </td>
+
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img *ngIf="!item.isEdit" (click)="openEditorLog(i)" src="assets/icon/tableau/pen.svg" alt="">
+              <img (click)="openDeleteLog(i)" *ngIf="!item.isEdit" src="assets/icon/tableau/delete.svg" alt="">
+
+              <img *ngIf="item.isEdit" (click)="validerEditorLog(i)" src="assets/icon/tableau/validedit.svg" alt="">
+              <img *ngIf="item.isEdit" (click)="annulerEditorLog(i)" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <table class="table-principal" *ngIf="isTableFormulaire">
+        <thead class="tr-table">
+        <tr >
+          <th class="th-table " >
+            <div>
+              <span>Nom du champ</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table champ-act" >
+            <div>
+              <span>Statut</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Action</span>
+              <!--<img src="assets/icon/tree.png" alt="">-->
+            </div>
+          </th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr   class="tr-table" *ngFor="let item of champsForm; index as i">
+          <td  class="td-table">
+            <input [readonly]="!item.isEdite" [(ngModel)]="item.nom" class="input-name-champ" type="text" placeholder="Nom du champ">
+
+          </td>
+          <td   class="td-table champ-act">
+            <img  (click)="toggleItem(i)" class="icon-toggle"  [src]="item.statut ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img *ngIf="!item.isEdite" src="assets/icon/tableau/pen.svg" alt="" (click)="modifyItem(i)">
+              <img *ngIf="!item.isEdite" src="assets/icon/tableau/delete.svg" alt="" (click)="deleteItem(i)">
+              <img *ngIf="item.isEdite" (click)="valideModify(i)" src="assets/icon/tableau/validedit.svg" alt="">
+              <img *ngIf="item.isEdite" (click)="annuleModify(i)" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        <!--EDITOR-->
+        <tr class="tr-table" *ngIf="isEditor">
+          <td  class="td-table ">
+            <input [(ngModel)]="nomChamp" class="input-name-champ" type="text" placeholder="Nom du champ">
+          </td>
+          <td   class="td-table champ-act ">
+            <img (click)="statutOnEditor()"  class="icon-toggle"  [src]="statutChamp ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table th-action th-grp ">
+            <div class="td-action ">
+              <img  (click)="validerEditor()" src="assets/icon/tableau/validedit.svg" alt="">
+              <img  (click)="annulerEditor()" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+        <!--EDITOR-->
+
+        <tr class="tr-table" *ngIf="!isEditor">
+          <td  class="td-table th-grise">Nom du champ</td>
+          <td   class="td-table champ-act th-grise">
+            <img   class="icon-toggle"  [src]="'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table th-action th-grp th-grise">
+            <div class="td-action " (click)="openEditor()">
+              <img  src="assets/icon/tableau/plus.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div class="popup-delete-confirmation" *ngIf="isPopupDelete">
+  <div class="content-of-popup-confirm">
+    <div class="circle-close" (click)="annulerDelete()">
+      <img src="assets/icon/noir/close.png" alt="">
+    </div>
+    <div class="card-of-popup-confirm">
+      <span class="big-titre">Confirmation</span>
+      <span>Voullez-vous supprimer cet enregistrement ?</span>
+
+      <button (click)="confirmeDelete()">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="popup-delete-confirmation" *ngIf="isDeleteLog">
+  <div class="content-of-popup-confirm">
+    <div class="circle-close" (click)="annuleDeleteLog()">
+      <img src="assets/icon/noir/close.png" alt="">
+    </div>
+    <div class="card-of-popup-confirm">
+      <span class="big-titre">Confirmation</span>
+      <span>Voullez-vous supprimer cet enregistrement ?</span>
+
+      <button (click)="confirmeDeleteLog()">Confirmer</button>
+    </div>
+  </div>
+</div>

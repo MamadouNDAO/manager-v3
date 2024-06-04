@@ -1,0 +1,460 @@
+<div [class]="theme.bgColor+' menu-left'">
+  <div [class]="theme.bgColorFonce+' part-top'">
+    <img  src="assets/icon/logo/iviplay-logo.png" alt="icon retour" class="arrow">
+
+  </div>
+  <div class="my-flex-c">
+    <div class="list-menu">
+      <div  routerLink="/" [ngClass]="isRouteActive('/') ? theme.menuActifs : ''" [class]="' item-menu menu-grise3'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/') ? 'assets/icon/menu/rose/dashboard.svg' : 'assets/icon/menu/blanc/dashboard.svg'" alt="" class="icon-menu">
+        </div>
+        <span>Tableau de bord</span>
+      </div>
+
+
+
+
+      <div [ngClass]="hPanelService === 'hAuto' ? 'bg-expension-open' : ''" [class]="hPanelService+' my-expansion'">
+        <div (click)="onExpansionStat()"  class="expan-header" >
+          <div class="cadre-icone">
+            <img [src]="'assets/icon/menu/blanc/statistiques.svg'" alt="" class="icon-profil">
+          </div>
+
+          <!--<img *ngIf="isThisRoute && !panelServiceOpen" [src]="'assets/icon/menu/rose/statistiques.svg'" alt="" class="icon-profil">-->
+          <span>Statistiques</span>
+        </div>
+        <img (click)="onExpansionStat()" [ngClass]="panelServiceOpen ? 'rotate' :  ''" [src]="(isThisRoute && !panelServiceOpen) ? 'assets/icon/menu/blanc/chevron.svg' : 'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+
+
+        <div (click)="goToWithReload('/statistique/usage')"  [ngClass]="isRouteActive('/statistique/usage') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion  first-accordion">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/usage') ? 'assets/icon/menu/rose/stat_usage.svg' : 'assets/icon/menu/blanc/stat_usage.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Statistique d'usage</span>
+        </div>
+        <div (click)="goToWithReload('/statistique/flux')" [ngClass]="isRouteActive('/statistique/flux') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/flux') ? 'assets/icon/menu/rose/stat_flux.svg' : 'assets/icon/menu/blanc/stat_flux.svg'" alt="" class="icon-menu">
+          </div>
+          <span>Statistiques de flux</span>
+        </div>
+        <div  (click)="goToWithReload('/statistique/actualite')" [ngClass]="isRouteActive('/statistique/actualite') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/actualite') ? 'assets/icon/menu/rose/stat_fil_actualite.svg' : 'assets/icon/menu/blanc/stat_fil_actualite.svg'" src="assets/icon/noir/restaurant.svg" alt="" class="icon-menu">
+          </div>
+
+          <span>Statistiques de fil d'actualité</span>
+        </div>
+        <div (click)="goToWithReload('/statistique/environnement')" [ngClass]="isRouteActive('/statistique/environnement') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/environnement') ? 'assets/icon/menu/rose/environnement.svg' : 'assets/icon/menu/blanc/environnement.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Statistiques d'environnement</span>
+        </div>
+
+        <div routerLink="/statistique/controle-acces" [ngClass]="isRouteActive('/statistique/controle-acces') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/controle-acces') ? 'assets/icon/menu/rose/service/controle_acces.svg' : 'assets/icon/menu/blanc/service/controle_acces.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Statistiques contrôle d'acces</span>
+        </div>
+
+        <div  (click)="expanMission()" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/incidents') ? 'assets/icon/menu/rose/service/missions.svg' : 'assets/icon/menu/blanc/service/missions.svg'" alt="" class="icon-menu">
+          </div>
+
+          <span>Statistiques de missions</span>
+          <img   [ngClass]="isMissionOpen ? 'rotate' :  ''" src="assets/icon/menu/blanc/chevron.svg" alt="" class=" icon-arrow">
+        </div>
+
+        <!--Sous menu mission-->
+        <div [class.s-menu-display]="isMissionOpen && panelServiceOpen" (click)="goToWithReload('/statistique/timing')"  [ngClass]="isRouteActive('/statistique/timing') ? theme.menuActifs : ''"  class="item-param-accordion s-menu">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/timing') ? 'assets/icon/menu/rose/mission/timing.svg' : 'assets/icon/menu/blanc/mission/timing.svg'"  alt="" class="icon-menu">
+          </div>
+          <span>Timing de resolution des tickets</span>
+        </div>
+        <div [class.s-menu-display]="isMissionOpen && panelServiceOpen" (click)="goToWithReload('/statistique/nombre_ticket')"   [ngClass]="isRouteActive('/statistique/nombre_ticket') ? theme.menuActifs : ''"  class="item-param-accordion s-menu">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/nombre_ticket') ? 'assets/icon/menu/rose/mission/ticket.svg' : 'assets/icon/menu/blanc/mission/ticket.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Nombre de tickets</span>
+        </div>
+        <div [class.s-menu-display]="isMissionOpen && panelServiceOpen" (click)="goToWithReload('/statistique/enquete_satisfaction')" [ngClass]="isRouteActive('/statistique/enquete_satisfaction') ? theme.menuActifs : ''"  class="item-param-accordion s-menu">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/enquete_satisfaction') ? 'assets/icon/menu/rose/mission/enquete.svg' : 'assets/icon/menu/blanc/mission/enquete.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Enquetes de satisfaction</span>
+        </div>
+        <div [class.s-menu-display]="isMissionOpen && panelServiceOpen" (click)="goToWithReload('/statistique/ressources')" [ngClass]="isRouteActive('/statistique/ressources') ? theme.menuActifs : ''"  class="item-param-accordion s-menu">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/ressources') ? 'assets/icon/menu/rose/mission/ressources.svg' : 'assets/icon/menu/blanc/mission/ressources.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Ressources</span>
+        </div>
+        <!--Sous menu mission-->
+
+        <div routerLink="/statistique/reservation" [ngClass]="isRouteActive('/statistique/reservation') ? theme.menuActifs : ''" *ngIf="panelServiceOpen" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistique/reservation') ? 'assets/icon/menu/rose/reservation.svg' : 'assets/icon/menu/blanc/reservation.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Statistiques reservations</span>
+        </div>
+      </div>
+
+      <div [ngClass]="hPanelPlatform === 'hAuto' ? 'bg-expension-open' : ''" [class]="hPanelPlatform+' my-expansion'">
+        <div   class="expan-header" (click)="onExpansionPlatform()">
+          <div class="cadre-icone">
+            <img [src]="'assets/icon/menu/blanc/plateforme.svg'" alt="" class="icon-profil">
+          </div>
+
+          <!--<img *ngIf="isThisRoute && !panelServiceOpen" [src]="'assets/icon/menu/rose/statistiques.svg'" alt="" class="icon-profil">-->
+          <span>Plateforme</span>
+          <img  [ngClass]="panelPlatform ? 'rotate' :  ''" [src]="(isThisRoute && !panelPlatform) ? 'assets/icon/menu/blanc/chevron.svg' : 'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+        </div>
+
+        <!--<div routerLink="/reservation5" [ngClass]="isRouteActive('/reservation') ? theme.menuActifs : ''" *ngIf="panelPlatform" class="item-param-accordion  first-accordion">
+          <img [src]="isRouteActive('/reservation') ? 'assets/icon/menu/rose/platforme/gestion_profils.svg' : 'assets/icon/menu/blanc/platforme/gestion_profils.svg'"  alt="" class="icon-menu">
+          <span>Gestion des profils</span>
+        </div>-->
+        <div  routerLink="/gestion/authentification" [ngClass]="isRouteActive('/gestion/authentification') ? theme.menuActifs : ''" *ngIf="panelPlatform" class="item-param-accordion first-accordion">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/gestion/authentification') ? 'assets/icon/menu/rose/platforme/gestion_authentification.svg' : 'assets/icon/menu/blanc/platforme/gestion_authentification.svg'"  alt="" class="icon-menu">
+          </div>
+
+        <span>Gestion de l'authentification</span>
+      </div>
+        <div routerLink="/gestion/support" [ngClass]="isRouteActive('/gestion/support') ? theme.menuActifs : ''" *ngIf="panelPlatform" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/gestion/support') ? 'assets/icon/menu/rose/platforme/gestion_support.svg' : 'assets/icon/menu/blanc/platforme/gestion_support.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Gestion du support</span>
+        </div>
+        <div routerLink="/gestion/droit" [ngClass]="isRouteActive('/gestion/droit') ? theme.menuActifs : ''" *ngIf="panelPlatform" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/gestion/droit') ? 'assets/icon/menu/rose/platforme/gestion_droits.svg' : 'assets/icon/menu/blanc/platforme/gestion_droits.svg'" alt="" class="icon-menu">
+          </div>
+
+          <span>Gestion des droits</span>
+        </div>
+
+
+        <div routerLink="/gestion/utilisateurs" [ngClass]="isRouteActive('/gestion/utilisateurs') ? theme.menuActifs : ''" *ngIf="panelPlatform" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/gestion/utilisateurs') ? 'assets/icon/menu/rose/platforme/gestion_utilisateurs.svg' : 'assets/icon/menu/blanc/platforme/gestion_utilisateurs.svg'"  alt="" class="icon-menu">
+          </div>
+          <span>Gestion des utilisateurs</span>
+        </div>
+
+      </div>
+
+
+      <!--FONCTIONNALITES MOBILES-->
+      <div [ngClass]="hMobileFunction === 'hAuto' ? 'bg-expension-open' : ''" [class]="hMobileFunction+' my-expansion'">
+        <div class="expan-header" (click)="onExpansionMobileFunction()">
+          <div class="cadre-icone">
+            <img [src]="'assets/icon/menu/blanc/mobiles.svg'" alt="" class="icon-profil">
+          </div>
+
+          <!--<img *ngIf="isThisRoute && !panelServiceOpen" [src]="'assets/icon/menu/rose/statistiques.svg'" alt="" class="icon-profil">-->
+          <span>Fonctionnalites mobiles</span>
+          <img  [ngClass]="panelMobileFunction ? 'rotate' :  ''" [src]="'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+        </div>
+
+        <div routerLink="/fonctionnalite/version" [ngClass]="isRouteActive('/fonctionnalite/version') ? theme.menuActifs : ''" *ngIf="panelMobileFunction" class="item-param-accordion  first-accordion">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/fonctionnalite/version') ? 'assets/icon/menu/rose/mobile/version.svg' : 'assets/icon/menu/blanc/mobile/version.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Version</span>
+        </div>
+
+
+        <div  routerLink="/fonctionnalite/inscription" [ngClass]="isRouteActive('/fonctionnalite/inscription') ? theme.menuActifs : ''" *ngIf="panelMobileFunction" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/fonctionnalite/inscription') ? 'assets/icon/menu/rose/mobile/inscription.svg' : 'assets/icon/menu/blanc/mobile/inscription.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Inscription</span>
+        </div>
+        <div routerLink="/fonctionnalite/connexion" [ngClass]="isRouteActive('/fonctionnalite/connexion') ? theme.menuActifs : ''" *ngIf="panelMobileFunction" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/fonctionnalite/connexion') ? 'assets/icon/menu/rose/mobile/connexion.svg' : 'assets/icon/menu/blanc/mobile/connexion.svg'"  alt="" class="icon-menu">
+          </div>
+          <span>Connexion</span>
+        </div>
+
+      </div>
+
+
+      <div [ngClass]="hService === 'hAuto' ? 'bg-expension-open' : ''" [class]="hService+' my-expansion'">
+        <div  [ngClass]="isRouteActive('/statistiques') ? theme.menuActifs : ''" routerLink="/statistique" class="expan-header" (click)="onExpansionService()">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/statistiques') ? 'assets/icon/menu/rose/services.svg' : 'assets/icon/menu/blanc/services.svg'" alt="" class="icon-profil">
+          </div>
+
+          <span>Services mobiles</span>
+          <img  [ngClass]="panelServices ? 'rotate' :  ''" [src]="(isThisRoute && !panelServices) ? 'assets/icon/menu/blanc/chevron.svg' : 'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+        </div>
+
+        <div routerLink="/reservation5" [ngClass]="isRouteActive('/reservation') ? theme.menuActifs : ''" *ngIf="panelServices" class="item-param-accordion  first-accordion">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/reservation') ? 'assets/icon/menu/rose/service/espaces.svg' : 'assets/icon/menu/blanc/service/espaces.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Espaces</span>
+        </div>
+
+
+        <div  routerLink="/restauration5" [ngClass]="isRouteActive('/restauration') ? theme.menuActifs : ''" *ngIf="panelServices" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/restauration') ? 'assets/icon/menu/rose/service/informations.svg' : 'assets/icon/menu/blanc/service/informations.svg'" src="assets/icon/noir/restaurant.svg" alt="" class="icon-menu">
+          </div>
+
+          <span>Informations</span>
+        </div>
+        <div routerLink="/meteo5" [ngClass]="isRouteActive('/meteo') ? theme.menuActifs : ''" *ngIf="panelServices" class="item-param-accordion ">
+          <div class="cadre-icone">
+            <img [src]="isRouteActive('/meteo') ? 'assets/icon/menu/rose/service/controle_acces.svg' : 'assets/icon/menu/blanc/service/controle_acces.svg'"  alt="" class="icon-menu">
+          </div>
+
+          <span>Controle d'acces</span>
+        </div>
+
+      </div>
+
+
+      <div routerLink="/actualite" [ngClass]="isRouteActive('/actualite') ? theme.menuActifs : ''" [class]="' item-menu'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/actualite') ? 'assets/icon/menu/rose/actualite.svg' : 'assets/icon/menu/blanc/actualite.svg'"  alt="" class="icon-menu">
+        </div>
+
+        <span>Fil d'actualite</span>
+      </div>
+
+
+      <div routerLink="/cartographie" [ngClass]="isRouteActive('/cartographie') ? theme.menuActifs : ''" [class]="' item-menu'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/cartographie') ? 'assets/icon/menu/rose/cartographie.svg' : 'assets/icon/menu/blanc/cartographie.svg'"  alt="" class="icon-menu">
+        </div>
+
+        <span>Cartographie</span>
+      </div>
+
+      <div routerLink="/mobile" [ngClass]="isRouteActive('/mobile') ? theme.menuActifs : ''" [class]="' item-menu'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/mobile') ? 'assets/icon/menu/rose/mobiles.svg' : 'assets/icon/menu/blanc/mobiles.svg'"  alt="" class="icon-menu">
+        </div>
+
+        <span>Mobile</span>
+      </div>
+      <div routerLink="/mobile" [ngClass]="isRouteActive('/mobile') ? theme.menuActifs : ''" [class]="' item-menu'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/mobile') ? 'assets/icon/menu/rose/equipements.svg' : 'assets/icon/menu/blanc/equipements.svg'"  alt="" class="icon-menu">
+        </div>
+
+        <span>Equipements</span>
+      </div>
+
+      <div routerLink="/mobile" [ngClass]="isRouteActive('/mobile') ? theme.menuActifs : ''" [class]="' item-menu'">
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/mobile') ? 'assets/icon/menu/rose/connecteur.svg' : 'assets/icon/menu/blanc/connecteur.svg'"  alt="" class="icon-menu">
+        </div>
+
+        <span>Connecteurs</span>
+      </div>
+
+
+    </div>
+    <div  [class]="stylePosition+' part-param'">
+      <div [ngClass]="hPanel === 'hAuto' ? 'bg-expension-open' : ''" [class]="hPanel+' my-expansion'" >
+        <div class="expan-header" (click)="onExpansion()">
+          <!--<img src="assets/icon/profil.png" alt="" class="icon-profil">-->
+          <div class="cadre-icone">
+            <div [class]="theme.bgColorFonce+' initialProfil'">
+              <span>{{premiereLettre('Lucie')}}</span>
+            </div>
+          </div>
+          <span>Lucie Durant</span>
+
+          <img  [ngClass]="panelOpen ? 'rotate' :  ''" [src]="'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+
+        </div>
+        <div *ngIf="panelOpen" class="info-user first-accordion">
+          <div class="item-i-u">
+            <div class="cadre-icone">
+              <img src="assets/icon/organisation.png" alt="">
+            </div>
+
+            <span>Iviplay</span>
+          </div>
+          <div class="item-i-u">
+            <img src="assets/icon/admin.png" alt="">
+            <span>Admin</span>
+          </div>
+          <div class="item-i-u">
+            <img src="assets/icon/mail.png" alt="">
+            <span>lucie.durant@iviplay.com</span>
+          </div>
+        </div>
+
+        <div *ngIf="panelOpen" class="item-param-accordion " (click)="logout()">
+          <img src="assets/icon/noir/logout.svg" alt="" class="icon-menu">
+          <span>Se deconnecter</span>
+        </div>
+        <div *ngIf="panelOpen" class="item-param-accordion menu-grisex" (click)="showDesinscription()">
+          <img src="assets/icon/noir/logut2.svg" alt="" class="icon-menu">
+          <span>Se desinscrire</span>
+        </div>
+      </div>
+      <div [ngClass]="hSupport === 'hAuto' ? 'bg-expension-open' : ''" [class]="hSupport+' my-expansion'" >
+        <div class="expan-header" (click)="onExpansionSupport()">
+          <div class="cadre-icone">
+            <img src="assets/icon/menu/blanc/support.svg" alt="" class="icon-profil">
+          </div>
+
+          <span>Support</span>
+
+          <img  [ngClass]="panelSupport ? 'rotate' :  ''" [src]="'assets/icon/menu/blanc/chevron.svg'" alt="" class="icon-fermer icon-arrow">
+        </div>
+        <div *ngIf="panelSupport" class="info-user first-accordion">
+          <div class="item-i-u">
+            <img src="assets/icon/organisation.png" alt="">
+            <span>Iviplay</span>
+          </div>
+          <div class="item-i-u">
+            <img src="assets/icon/admin.png" alt="">
+            <span>Support</span>
+          </div>
+          <div class="item-i-u">
+            <img src="assets/icon/mail.png" alt="">
+            <span>support@iviplay.com</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div routerLink="/parametres" [ngClass]="isRouteActive('/parametres') ? theme.menuActifs : ''" class="item-param">
+
+        <div class="cadre-icone">
+          <img [src]="isRouteActive('/parametres') ? 'assets/icon/menu/blanc/setting.svg' : 'assets/icon/menu/blanc/setting.svg'" alt="" class="icon-menu">
+        </div>
+        <span>Parametres</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="popup-edit-user" *ngIf="isEdit">
+  <div class="card-edit-user">
+    <div class="header-haut">
+      <span>Edition du profil</span>
+      <img src="assets/icon/noir/close.png" (click)="closeEdit()">
+    </div>
+
+    <div class="card-form">
+        <div [class]="theme.bgColor+' circle-photo'" *ngIf="hasPhoto">
+          <span>LD</span>
+          <div class="opt-cam">
+            <img src="assets/icon/camera.png" alt="">
+          </div>
+        </div>
+      <div class="circle-photo">
+        <img class="photo-c"  [src]="seletedImg" alt="">
+        <div class="opt-cam">
+          <img src="assets/icon/camera.png" alt="" (click)="inputIm.click()">
+        </div>
+      </div>
+      <input [(ngModel)]="champImg" #inputIm type="file" [hidden]="true" (change)="getImageFile($event)">
+      <div class="card-forms">
+        <div class="form-grp">
+          <img src="assets/icon/edit/user.png" alt="">
+          <div class="grp">
+            <span>Prénom</span>
+            <input [(ngModel)]="editUser.firstname" type="text" placeholder="Prénom">
+          </div>
+        </div>
+
+        <div class="form-grp">
+          <img src="assets/icon/edit/user.png" alt="">
+          <div class="grp">
+            <span>Nom</span>
+            <input [(ngModel)]="editUser.lastname" type="text" placeholder="Nom">
+          </div>
+        </div>
+
+        <div class="form-grp">
+          <img src="assets/icon/edit/mail.png" alt="">
+          <div class="grp">
+            <span>Email</span>
+            <input [(ngModel)]="editUser.email" type="email" placeholder="Email">
+          </div>
+        </div>
+
+        <div class="spc-btn">
+          <button [class]="theme.borderColor+' '+theme.color" (click)="closeEdit()">Annuler</button>
+          <button [class]="theme.bgColor" (click)="sendEditUser()">Enregistrer</button>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+
+<div class="popup-chargement" *ngIf="isLoading">
+  <div class="loader" >
+    <span>Chargement</span>
+    <span class="dot">.</span>
+    <span class="dot">.</span>
+    <span class="dot">.</span>
+  </div>
+</div>
+<div class="popup-toast" *ngIf="isSucces || isError">
+  <div class="card-toast" *ngIf="isSucces">
+    <div class="cd-type succes">
+      <img src="assets/icon/toast/success.png" alt="">
+    </div>
+    <div class="right-part">
+      <span class="text-type txt-succes">Succès</span>
+      <span>{{text}}</span>
+    </div>
+  </div>
+
+  <div class="card-toast" *ngIf="isError">
+    <div class="cd-type error">
+      <img src="assets/icon/toast/error.png" alt="">
+    </div>
+    <div class="right-part">
+      <span class="text-type txt-error">Erreur</span>
+      <span>{{text}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="popup-delete" *ngIf="isDeleting">
+  <div class="circle-close" (click)="closeDelete()">
+    <img src="assets/icon/noir/close.png" alt="">
+  </div>
+  <div class="card-delete">
+    <img src="assets/icon/noir/logut2.svg" alt="">
+    <span class="confirm">Confirmation</span>
+    <span class="little">Voullez vous vraiment vous désinscrire ?</span>
+    <button (click)="desinscrire()" [class]="theme.bgColor+' btn'">Confirmer</button>
+  </div>
+</div>

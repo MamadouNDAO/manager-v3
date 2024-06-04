@@ -1,0 +1,191 @@
+<div [class]="hauteurTab+' my-tab-group'">
+  <div class="header-tab">
+    <div (click)="changeTabs('list')" [ngClass]="isListe ? theme.bgColor : ''" class="tab">Liste</div>
+    <div (click)="changeTabs('card')" [ngClass]="isCard ? theme.bgColor : ''" class="tab">Carte</div>
+    <div (click)="changeTabs('graphe')" [ngClass]="isGraphe ? theme.bgColor : ''" class="tab">Graphique</div>
+  </div>
+
+  <div class="content-tab" *ngIf="isListe">
+    <table class="table-principal">
+      <thead class="tr-table">
+      <tr>
+        <th class="th-table th-met">
+          <div>
+            <span>Metrique</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Entite</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Os</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Usager</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Date</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Terminal</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Mesure</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table th-action">
+          <div>
+            <span></span>
+          </div>
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr (click)="selectItem(i)" [ngClass]="item.selected ? theme.bgColor : ''" class="tr-table" *ngFor="let item of stats | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+        <td  class="td-table th-met">{{item.metrique}}</td>
+        <td  class="td-table">{{item.entite}}</td>
+        <td  class="td-table">{{item.os}}</td>
+        <td  class="td-table">{{item.usager}}</td>
+        <td  class="td-table">{{item.date}}</td>
+        <td  class="td-table">{{item.terminal}}</td>
+        <td  class="td-table">{{item.mesure}}</td>
+        <td  class="td-table th-action">
+          <div class="td-action">
+            <img  src="assets/icon/stat/info.svg" alt="">
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+
+    </table>
+    <div class="tr-paginator">
+      <div class="option-on-bottom">
+        <span>{{total}} Metriques</span>
+        <div class="my-paginator">
+          <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+          <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+          <div class="list-page">
+            <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+          </div>
+          <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+          <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isCard">
+    <div class="contenu-card">
+      <div class="card" *ngFor="let item of statsCard">
+        <img [src]="'assets/icon/stat/noir/'+item.image+'.svg'" alt="">
+        <span class="lib-card">{{ item.title }}</span>
+        <span class="lib-number">{{ item.count }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isGraphe">
+    <div  class="chart-cadre">
+      <div class="partion partition-1">
+        <div class="espace-cadre">
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/nb_ouvre_service.svg" alt="">
+            <span >Nombre de services actifs</span>
+            <span class="bolder-ft">5</span>
+          </div>
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/nb_badeg_electronique.svg" alt="">
+            <span >Nombre de badges electroniques actifs</span>
+            <span class="bolder-ft">675</span>
+          </div>
+        </div>
+        <div class="nd-part">
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/nb_reservation.svg" alt="">
+            <span >Nombre de réservation</span>
+            <span class="bolder-ft">1692</span>
+          </div>
+          <canvas id="chart-reserv" class="elem-chart">
+
+          </canvas>
+        </div>
+      </div>
+      <div class="partion partition-2">
+        <div class="prt-1">
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/nb_notif.svg" alt="">
+            <span >Nombre de notification par services</span>
+            <span class="bolder-ft">675</span>
+          </div>
+
+          <canvas id="chart-notif" class="elem-chart">
+
+          </canvas>
+        </div>
+        <div class="prt-1">
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/nb_abonne.svg" alt="">
+            <span >Nombre d'abonnes par services</span>
+            <span class="bolder-ft">675</span>
+          </div>
+
+          <canvas id="chart-abonne" class="elem-chart">
+
+          </canvas>
+        </div>
+        <div class="prt-3">
+          <div class="elem-top">
+            <img src="assets/icon/stat/noir/traitement_histo.svg" alt="">
+            <span >Traitement des historiques</span>
+            <span class="bolder-ft">245</span>
+          </div>
+          <div class="list-last-part">
+            <div class="el-of-list">
+              <span>Réservation de la salle Angers</span>
+              <span>Transmise</span>
+            </div>
+
+            <div class="el-of-list">
+              <span>Réservation de la salle Angers</span>
+              <span class="encrs">En cours</span>
+            </div>
+
+            <div class="el-of-list">
+              <span>Réservation de la salle Angers</span>
+              <span [class]="theme.color">Cloturee</span>
+            </div>
+
+            <div class="el-of-list">
+              <span>Réservation de la salle Angers</span>
+              <span>Transmise</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+  </div>
+</div>

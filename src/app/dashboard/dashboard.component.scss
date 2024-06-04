@@ -1,0 +1,145 @@
+.page-generale{
+  overflow-y: auto;
+}
+
+.option-on-top{
+  position: relative;
+  width: calc(100% - 40px) !important;
+  //left: 350px;
+  top: 20px;
+  height: 100px !important;
+  background: #fff !important;
+}
+
+
+
+.item-metric{
+ width: 100%;
+  //width: calc((100% - 60px) / 5);
+}
+
+.page-generale::-webkit-scrollbar{
+  width: 0.5rem;
+}
+.page-generale::-webkit-scrollbar-track {
+  background: none;
+}
+.scroll-pmu::-webkit-scrollbar-thumb {
+  background-color: var(--pmu-color) ;
+  border-radius: 6px;
+  border: none;
+}
+
+.scroll-sci::-webkit-scrollbar-thumb {
+  background-color: var(--sci-color) ;
+  border-radius: 6px;
+  border: none;
+}
+
+
+.th-icon{
+  width: 2% !important;
+}
+
+.th-metric{
+  width: 16% !important;
+}
+
+.th-dec{
+  width: 20% !important;
+}
+
+.th-img-bool{
+  width: 2% !important;
+}
+
+.item-metric{
+  cursor: pointer;
+  transition: background 0.4s ease-in;
+  height: 100px !important;
+}
+.header-tab{
+  height: 50px;
+  width: calc(100% - 40px);
+  margin: 20px auto;
+  border-bottom: solid 3px var(--iviplay-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  .tab{
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+    //border: solid 1px var(--iviplay-color);
+  }
+
+  .tab-actif{
+    min-width: 100px;
+    transition: all ease 0.3s;
+  }
+
+  .all-action{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+    img{
+      cursor: pointer;
+    }
+  }
+}
+
+
+.info-all-desactived{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: absolute;
+  top: 35%;
+  left: 47%;
+  border: solid 1px var(--color-gris-clair);
+  border-radius: 8px;
+
+  strong{
+    cursor: pointer;
+    color: var(--iviplay-fonce);
+  }
+}
+
+.grised{
+  opacity: 0.5;
+  cursor: auto !important;
+}
+
+
+.input-edit-seuil{
+  border: none;
+  background: none;
+  font-size: 17px;
+}
+
+.editor-seuil{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.th-seuil-edit{
+  width: 6% !important;
+}

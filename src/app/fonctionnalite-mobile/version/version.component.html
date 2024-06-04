@@ -1,0 +1,148 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Version</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input type="text" placeholder="Rechercher">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img src="assets/icon/menu/blanc/notification.svg" alt="">
+          <span [class]="theme.bgColor+' counter-notif'">11</span>
+        </div>
+        <img src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord " >
+      <table class="table-principal">
+        <thead class="tr-table">
+        <tr >
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Application</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th" >
+            <div>
+              <span>Version</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th" >
+            <div>
+              <span>OS</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Version os</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-3" >
+            <div>
+              <span>Marque</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-5" >
+            <div>
+              <span>Derniere mise à jour</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Derniere connexion</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Derniere deconnexion</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Changement de version</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table little-th-4" >
+            <div>
+              <span>Environnement</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <!--<th class="th-table little-th-4" >
+            <div>
+              <span>Action</span>
+            </div>
+          </th>-->
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr   class="tr-table" *ngFor="let item of dataTbale; index as i">
+          <td  class="td-table little-th-3">{{item.nom}}</td>
+          <td  class="td-table little-th">{{item.versionApp}}</td>
+          <td  class="td-table little-th">{{item.os}}</td>
+          <td  class="td-table little-th-3">{{item.versionOS}}</td>
+          <td  class="td-table little-th-3">{{item.marque}}</td>
+          <td  class="td-table little-th-5">{{item.maj | date: "EE dd MMM yyyy"}}</td>
+          <td  class="td-table little-th-4">{{item.lastConnexion | date: "EE dd MMM yyyy"}}</td>
+          <td  class="td-table little-th-4">{{item.lastDeconnexion | date: "EE dd MMM yyyy"}}</td>
+          <td   class="td-table th-img-bool little-th-4">
+            <img  (click)="toggleItem(i)" class="icon-toggle"  [src]="item.changeVersion ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table little-th-4">{{item.env}}</td>
+         <!-- <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img  src="assets/icon/tableau/pen.svg" alt="">
+              <img (click)="openDelete(i)"  src="assets/icon/tableau/delete.svg" alt="">
+            </div>
+          </td>-->
+        </tr>
+        <!--<tr  class="tr-table">
+          <td  class="td-table th-met th-grise">Application</td>
+          <td  class="td-table th-grise">Version</td>
+          <td  class="td-table th-grise">Type OS</td>
+          <td  class="td-table th-grise">Version OS</td>
+          <td  class="td-table th-grise">marque</td>
+          <td  class="td-table th-grise">mise à jour</td>
+          <td  class="td-table th-grise">connexion</td>
+          <td  class="td-table th-grise">deconnexion</td>
+          <td   class="td-table th-img-bool">
+            <img  class="icon-toggle th-grise"  [src]="'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="td-table th-grise">environnelment</td>
+          <td  class="td-table th-action th-grp">
+            <div class="td-action ">
+              <img  src="assets/icon/tableau/plus.svg" alt="">
+            </div>
+          </td>
+        </tr>-->
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

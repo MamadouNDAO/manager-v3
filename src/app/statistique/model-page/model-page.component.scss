@@ -1,0 +1,228 @@
+.item-metric{
+  background: none !important;
+  border: solid 1px var(--color-gris-clair);
+  height: 80px !important;
+  align-items: center !important;
+
+  .title-metric{
+    color: #000 !important;
+  }
+
+  .metric{
+    font-size: 16px !important;
+  }
+}
+
+
+.option-on-top{
+  margin-top: 20px !important;
+}
+
+.th-met{
+  width: 30% !important;
+}
+
+.th-table, .td-table{
+  width: auto !important;
+}
+.th-grp, .th-action{
+  width: 2% !important;
+}
+
+.contenu-card{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+
+  .card{
+    background: var(--color-gris-clair);
+    border-radius: 8px;
+    height: 180px;
+    width: calc((100% - 150px) / 4);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 15px;
+
+    .lib-number{
+      font-weight: 700;
+      font-size: 24px;
+    }
+  }
+}
+
+.chart-cadre{
+  width: 100%;
+  height: 97%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .prt-1{
+    width: calc((100% - 10px) / 2);
+    height: 385px;
+    background: var(--color-gris-clair);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .elem-top{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      margin-left: 30px;
+      width: 100%;
+      .bolder-ft{
+        font-weight: 700;
+        font-size: 24px;
+      }
+    }
+
+    .elem-chart{
+      width: calc(100% - 30px) !important;
+      height: 65% !important;
+      margin: auto;
+    }
+  }
+
+}
+
+
+
+.grised{
+  opacity: 0.5;
+  cursor: auto !important;
+}
+
+
+.popup-calendar{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.49);
+
+  .bloc-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    .circle-close{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        cursor: pointer;
+      }
+    }
+
+    .card-calender{
+      background: #fff;
+      border-radius: 8px;
+      width: 350px;
+      .contenus-btn{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 15px;
+      }
+      button{
+        padding: 10px;
+        background: var(--iviplay-color) !important;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.item-metric{
+  input{
+    border: none;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  img{
+    cursor: pointer;
+  }
+}
+
+.popup-descriptif{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.49);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .cadre-desc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+
+    .circle-close-desc{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .card-desc{
+      padding: 25px;
+      background: #fff;
+      border-radius: 8px;
+      width: 350px;
+      height: auto;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 15px;
+      text-align: justify;
+      .titre-desc{
+        font-weight: 700;
+      }
+    }
+  }
+}

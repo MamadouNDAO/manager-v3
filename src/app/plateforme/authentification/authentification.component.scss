@@ -1,0 +1,108 @@
+.th-img-bool{
+  width: 1% !important;
+}
+.th-table, .td-table{
+  width: auto !important;
+}
+.th-grp, .th-action{
+  width: 2% !important;
+}
+
+.th-grise{
+  opacity: 0.2;
+  cursor: auto !important;
+}
+
+.th-grise:hover{
+  font-weight: initial !important;
+}
+
+.tr-selected{
+  border-left: solid 5px var(--iviplay-rose);
+  border-radius: 0 !important;
+}
+
+.input-name-champ{
+  width: 80%;
+  padding: 10px 0 10px 0;
+  font-size: 16px;
+  border: none;
+  background: none;
+}
+
+.grised{
+  opacity: 0.5;
+  cursor: auto !important;
+}
+
+
+.popup-delete{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.49);
+  z-index: 1000;
+
+  .ctn-pop{
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    @keyframes slideIn {
+      from {bottom: -200%;}
+      to {bottom: 0;}
+    }
+  }
+  .circle-delete{
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .card-info{
+    width: 350px;
+    height: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+
+    .d-h1{
+      font-weight: 700;
+    }
+
+    .detail-tx{
+      text-align: center;
+    }
+
+    button{
+      padding: 15px;
+      background: var(--iviplay-fonce);
+      border: none;
+      width: 100%;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 700;
+      margin-top: auto;
+      cursor: pointer;
+    }
+  }
+}
+

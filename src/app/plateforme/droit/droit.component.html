@@ -1,0 +1,104 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Gestion des droits </span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input type="text" placeholder="Rechercher dans gestion des droits">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img src="assets/icon/menu/blanc/notification.svg" alt="">
+          <span [class]="theme.bgColor+' counter-notif'">11</span>
+        </div>
+        <img src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord" >
+      <div  [class]="'marg-t-20 my-tab-group'">
+        <div class="header-tab">
+          <div (click)="changeTabs('fonctionnalite')" [ngClass]="isFonction ? theme.bgColor : ''" class="tab">Fonctionnalite</div>
+          <div (click)="changeTabs('service')" [ngClass]="isService ? theme.bgColor : ''" class="tab">Services</div>
+        </div>
+
+        <div class="content-tab" *ngIf="isFonction">
+          <div class="ligne-cadre">
+            <div class="cellule"></div>
+            <div class="cellule">Visiteur</div>
+            <div class="cellule">Occupant</div>
+            <div class="cellule">Prestataire</div>
+            <div class="cellule">Administrateur</div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule">Fil d'actualite</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule">Mode Cartographie</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule">Mode serviciel</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+
+          <div class="ligne-cadre">
+            <div class="cellule">Historisation</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule">Support</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule">Notification</div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+          <div class="ligne-cadre">
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+            <div class="cellule"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+</div>

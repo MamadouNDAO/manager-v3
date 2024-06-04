@@ -1,0 +1,156 @@
+<div  [class]="hauteurTab+' my-tab-group'">
+  <div class="header-tab">
+    <div (click)="changeTabs('list')" [ngClass]="isListe ? theme.bgColor : ''" class="tab">Liste</div>
+    <div (click)="changeTabs('card')" [ngClass]="isCard ? theme.bgColor : ''" class="tab">Carte</div>
+    <div (click)="changeTabs('graphe')" [ngClass]="isGraphe ? theme.bgColor : ''" class="tab">Graphique</div>
+  </div>
+
+  <div class="content-tab" *ngIf="isListe">
+    <table class="table-principal">
+      <thead class="tr-table">
+      <tr>
+        <th class="th-table th-met">
+          <div>
+            <span>Metrique</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Entite</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Os</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Usager</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Date</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Terminal</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+        <th class="th-table">
+          <div>
+            <span>Mesure</span>
+            <img src="assets/icon/tree.png" alt="">
+          </div>
+        </th>
+       <!-- <th class="th-table th-action">
+          <div>
+            <span></span>
+          </div>
+        </th>-->
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr (click)="selectItem(i)" [ngClass]="item.selected ? theme.bgColor : ''" class="tr-table" *ngFor="let item of stats | paginate: { itemsPerPage: itemParPage, currentPage: p }; index as i">
+        <td  class="td-table th-met">{{item.metrique}}</td>
+        <td  class="td-table">{{item.entite}}</td>
+        <td  class="td-table">{{item.os}}</td>
+        <td  class="td-table">{{item.usager}}</td>
+        <td  class="td-table">{{item.date}}</td>
+        <td  class="td-table">{{item.terminal}}</td>
+        <td  class="td-table">{{item.mesure}}</td>
+       <!-- <td  class="td-table th-action">
+          <div class="td-action">
+            <img  src="assets/icon/stat/info.svg" alt="">
+          </div>
+        </td>-->
+      </tr>
+
+      </tbody>
+
+    </table>
+    <div class="tr-paginator">
+      <div class="option-on-bottom">
+        <span>{{total}} Metriques</span>
+        <div class="my-paginator">
+          <img src="assets/icon/tableau/first-page.png" alt="" (click)="changePage(1)">
+          <img src="assets/icon/tableau/precedent.png" alt="" (click)="changePage(p-1)">
+          <div class="list-page">
+            <span [class.actif-li]="p == i+1"  (click)="changePage(i+1)" *ngFor="let index of [].constructor(nombrePage); let i = index">{{ i + 1 }}</span>
+
+          </div>
+          <img src="assets/icon/tableau/suivant.png" alt="" (click)="changePage(p+1)">
+          <img src="assets/icon/tableau/last-page.png" alt="" (click)="changePage(nombrePage)">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isCard">
+    <div class="contenu-card">
+      <div class="card" *ngFor="let item of statsCard">
+        <img [src]="'assets/icon/stat/noir/'+item.image+'.svg'" alt="">
+        <span class="lib-card">{{ item.title }}</span>
+        <span class="lib-number">{{ item.count }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-tab" *ngIf="isGraphe">
+    <div class="cadre-of-charts">
+      <div class="card-item-chart" >
+        <div class="top-data">
+          <img src="assets/icon/stat/noir/nb_post.svg" alt="">
+          <span class="lib-card">Nombre de posts publies</span>
+          <span class="lib-number">7856</span>
+        </div>
+        <canvas id="chart_post" class="data-chart" ></canvas>
+      </div>
+
+
+
+      <div class="card-item-chart" >
+        <div class="top-data">
+          <img src="assets/icon/stat/noir/nb_like.svg" alt="">
+          <span class="lib-card">Nombre de likes par post</span>
+          <span class="lib-number">7856</span>
+        </div>
+        <canvas id="chart_like" class="data-chart" ></canvas>
+      </div>
+
+
+
+      <div class="card-item-chart" >
+        <div class="top-data">
+          <img src="assets/icon/stat/noir/nb_comment.svg" alt="">
+          <span class="lib-card">Nombre de commentaires par post</span>
+          <span class="lib-number">7856</span>
+        </div>
+        <canvas id="chart_comment" class="data-chart" ></canvas>
+      </div>
+
+
+
+      <div class="card-item-chart" >
+        <div class="top-data">
+          <img src="assets/icon/stat/noir/nb_partage.svg" alt="">
+          <span class="lib-card">Nombre de partages par post</span>
+          <span class="lib-number">7856</span>
+        </div>
+        <canvas id="chart_partage" class="data-chart" ></canvas>
+      </div>
+    </div>
+    <br><br>
+  </div>
+</div>

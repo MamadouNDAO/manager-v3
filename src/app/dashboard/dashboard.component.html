@@ -1,0 +1,365 @@
+<div [ngClass]="theme.color == 'pmu-color' ? 'scroll-pmu' : 'scroll-sci'" class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">{{titrePage}}</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreSalle(metricFiltre)" type="text" placeholder="Rechercher sur le tableau de bord">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+          <!--<span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img (click)="showSupp()" class="grised6" src="assets/icon/menu/blanc/support-left.svg" alt="">
+        <img (click)="goToParam()" [src]="isParam ? 'assets/icon/menu/gris/setting.svg' : 'assets/icon/menu/blanc/setting-left.svg'" alt="">
+      </div>
+    </div>
+    <div  class="content-dashbord animate__animated fadeInDown" *ngIf="!isParam">
+      <div class="option-on-top on-dashboard">
+        <ng-container *ngFor="let item of metrics; index as i">
+        <div (click)="onSelectMetric(i)" [ngClass]="item.isSelected ? theme.bgColor : '' " class="item-metric" *ngIf="item.isActif">
+          <div class="on-left">
+            <span class="title-metric">{{item.title}}</span>
+           <!-- <span class="metric">{{item.count}}</span>-->
+          </div>
+          <img [src]="item.isSelected ? 'assets/icon/stat/blanc/'+item.icone+'.svg' : 'assets/icon/stat/noir/'+item.icone+'.svg'" alt="">
+        </div>
+        </ng-container>
+
+
+
+
+
+      </div>
+      <div class="info-all-desactived" *ngIf="nbMetricActif == 0 && !isParam">
+        <span>Toutes les statistiques sont desactivees !</span>
+        <span>Aller dans <strong (click)="goToParam()">Parametres</strong> pour les activer</span>
+      </div>
+     <!--<app-metric-actu *ngIf="componentCalled === 'actu' && nbMetricActif > 0" [stats]="suggestionStat" [hauteurTab]="margTop"></app-metric-actu>-->
+      <!--<app-metric-service *ngIf="componentCalled === 'metier' && nbMetricActif > 0" [hauteurTab]="margTop"></app-metric-service>-->
+
+      <app-squelette  *ngIf="isView && componentCalled != '' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [typeGraph]="typeGraphe"
+                     [displayLabel]="isLegend"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="lables" [datasGraph]="grapheData"
+                     [titreGraph]="titreGraphe"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <!--<app-squelette *ngIf="componentCalled === 'metier' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+
+                     [typeGraph]="'line'"
+                     [displayLabel]="false"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="labelsGrapgeService" [datasGraph]="dataGrapheService"
+                     [titreGraph]="'Nombre de services actifs par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'actu' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'line'"
+                     [displayLabel]="true"
+                     [labelsGraph]="labelsGrapheActu" [datasGraph]="dataGrapheActu"
+                     [titreGraph]="'Nombre de posts publies par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <app-squelette [hauteurTab]="margTop" *ngIf="componentCalled === 'connexion' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion" [dataTable]="suggestionStat" [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [dataCard]="dataCard" [datasGraph]="dataGraphConnexion" [displayLabel]="true"></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'co' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [labelsGraph]="labelsGraphCo" [datasGraph]="dataGraphCo"
+                     [titreGraph]="'Taux de CO² moyen par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'humidite' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [typeGraph]="'bar'"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="labelsGraphHumidite" [datasGraph]="dataGraphHumidite"
+                     [titreGraph]="'Taux d\'humidite moyenne par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'temperature' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="dataTableTemp"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphTemp"
+                     [titreGraph]="'Temperature moyenne par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <app-squelette *ngIf="componentCalled === 'acces' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphTemp"
+                     [titreGraph]="'Nombre de demande d\'acces par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'proximite-flux' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [typeGraph]="'bar'"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphTemp"
+                     [titreGraph]="'Nombre de detection de proximite par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+
+      <app-squelette *ngIf="componentCalled === 'affectation' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [typeGraph]="'bar'"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphAffectation"
+                     [titreGraph]="'Duree moyenne d\'affectation d\'un ticket par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <app-squelette *ngIf="componentCalled === 'resolution' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [typeGraph]="'bar'"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphAffectation"
+                     [titreGraph]="'Duree moyenne de resolution d\'un ticket par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <app-squelette *ngIf="componentCalled === 'prise_charge' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphAffectation"
+                     [titreGraph]="'Duree moyenne de prise en charge d\'un ticket par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+
+      <app-squelette *ngIf="componentCalled === 'enquete' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [labelsGraph]="labelsGraphTemp" [datasGraph]="dataGraphAffectation"
+                     [titreGraph]="'Duree moyenne d\'une enquete de satisfaction par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'reservation' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [displayLabel]="false"
+                     [labelsGraph]="labelsGrapgeService" [datasGraph]="dataGrapheReservation"
+                     [titreGraph]="'Nombre de reservations par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'validation' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [displayLabel]="false"
+                     [labelsGraph]="labelsGrapgeService" [datasGraph]="dataGrapheReservation"
+                     [titreGraph]="'Duree moyenne de validation d\'un ticket par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>
+      <app-squelette *ngIf="componentCalled === 'inscription' && nbMetricActif > 0"
+                     [enteteTable]="entetesTableConnexion"
+                     [dataTable]="suggestionStat"
+                     [dataCard]="dataCard"
+                     [seuilValue]="seuilValue"
+                     [enteteTableSeuil]="entetesAlerte"
+                     [unite]="unite"
+                     [typeGraph]="'bar'"
+                     [displayLabel]="false"
+                     [labelsGraph]="labelsGrapgeService" [datasGraph]="dataGrapheReservation"
+                     [titreGraph]="'Duree moyenne de validation d\'un ticket par jour'"
+                     [hauteurTab]="margTop"
+      ></app-squelette>-->
+      <!--<app-data-reservation *ngIf="componentCalled === 'reservation' && nbMetricActif > 0"
+                            [activeFiltre]="false" [hauteurTab]="margTop" [stats]="suggestionStat" ></app-data-reservation>-->
+
+    </div>
+    <div  class="content-dashbord parametre animate__animated fadeInDown" *ngIf="isParam">
+      <div class="header-tab">
+        <div (click)="changeTabCate(i)" [ngClass]="cat.isActif ? theme.bgColor+' tab-actif' : ''"  [class]="' tab'" *ngFor="let cat of dataTabsParam; let i = index">{{cat.libelle}}</div>
+        <div class="all-action">
+          <span>{{libelleAllAction}}</span>
+          <img (click)="desactiveActiveAll()"  class="icon-toggle"  [src]="isAllAction ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+        </div>
+      </div>
+      <table class="table-principal">
+        <thead class="tr-table">
+        <tr>
+          <th class="th-table th-icon">
+            <div>
+            </div>
+          </th>
+          <th class="th-table th-metric">
+            <div>
+              <span>Metrique</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+
+          <th class="th-table th-desc">
+            <div>
+              <span>Descriptif</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Activation</span>
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Alerte</span>
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Seuil</span>
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Unite</span>
+            </div>
+          </th>
+          <th class="th-table th-seuil-edit">
+            <div>
+              <span>Action</span>
+            </div>
+          </th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr  class="tr-table" *ngFor="let item of metrics; index as i">
+          <ng-container *ngIf="categorieActif == item.categorie">
+
+            <td  class="td-table  th-icon"><img [src]="'assets/icon/stat/noir/'+item.icone+'.svg'" alt=""></td>
+            <td  class="td-table th-metric">{{item.title}}</td>
+            <td  class="td-table  th-desc">{{getDesc(item)}}</td>
+            <td   class="td-table th-img-bool">
+              <img  (click)="toggleItem(i)" class="icon-toggle"  [src]="item.isActif ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+            </td>
+            <td class="td-table th-img-bool">
+              <img  (click)="toggleItemAlert(i)" class="icon-toggle"  [src]="item.isAlert ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+            </td>
+            <td class="td-table th-img-bool">
+              <input  [disabled]="!item.isEditeSeuil" class="input-edit-seuil" [(ngModel)]="item.seuil" type="text" >
+            </td>
+
+            <td class="td-table th-img-bool">{{item.unite}}</td>
+
+            <td class="td-table th-seuil-edit ">
+              <div class="th-seuil-edit editor-seuil">
+                <img *ngIf="!item.isEditeSeuil" (click)="editorSeuil(i)" src="assets/icon/tableau/pen.svg" alt="">
+                <img *ngIf="item.isEditeSeuil" (click)="validationEditSeuil(i, item.seuil)" src="assets/icon/tableau/validedit.svg" alt="">
+                <img *ngIf="item.isEditeSeuil" (click)="annuleEditSeuil(i)" src="assets/icon/tableau/annuledit.svg" alt="">
+              </div>
+            </td>
+          </ng-container>
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+    <br>
+    <!---->
+  </div>
+</div>
+
+
+<div class="popup-support" *ngIf="isSupport">
+  <div class="card-notification-act">
+    <div class="header-notif">
+      <span>Support</span>
+      <mat-icon (click)="showSupp()" class="icon-password" fontSet="material-icons-outlined">close</mat-icon>
+    </div>
+    <div class="content-notif">
+      <div class="item-i-u">
+        <img src="assets/icon/organisation.png" alt="">
+        <span>Iviplay</span>
+      </div>
+      <div class="item-i-u">
+        <img src="assets/icon/admin.png" alt="">
+        <span>Support</span>
+      </div>
+      <div class="item-i-u">
+        <img src="assets/icon/mail.png" alt="">
+        <span>support@iviplay.com</span>
+      </div>
+    </div>
+  </div>
+</div>

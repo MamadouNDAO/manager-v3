@@ -1,0 +1,126 @@
+<div class="page-generale">
+  <app-menu></app-menu>
+  <div class="container">
+    <div class="header-top">
+      <span class="title-service">Gestion d'authentification</span>
+      <div class="part-input-search">
+        <mat-icon  class="icon-password" fontSet="material-icons-outlined">search</mat-icon>
+        <input #metricFiltre (input)="filtreData(metricFiltre)" type="text" placeholder="Rechercher dans gestion authentification">
+      </div>
+      <div class="info-user">
+        <div class="notif" style="margin-top: 4px">
+          <img class="grised" src="assets/icon/menu/blanc/notification.svg" alt="">
+          <!--<span [class]="theme.bgColor+' counter-notif'">11</span>-->
+        </div>
+        <img class="grised" src="assets/icon/menu/blanc/historique.svg" alt="">
+        <img src="assets/icon/menu/blanc/support-left.svg" alt="">
+      </div>
+    </div>
+
+    <div  class="content-dashbord animate__animated fadeInDown" >
+      <table class="table-principal">
+        <thead class="tr-table">
+        <tr>
+          <th class="th-table th-met">
+            <div>
+              <span>Option d'authentifiaction</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table">
+            <div>
+              <span>Parametres</span>
+              <img src="assets/icon/tree.png" alt="">
+            </div>
+          </th>
+          <th class="th-table th-img-bool">
+            <div>
+              <span>Activation</span>
+
+            </div>
+          </th>
+          <th class="th-table th-grp">
+            <div>
+              <span>Actions</span>
+
+            </div>
+          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr [ngClass]="item.selected ? 'tr-selected' : ''" (click)="selectItem(i)"  class="tr-table" *ngFor="let item of suggestionData; index as i">
+          <td  class="td-table th-met">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.option" placeholder="option">
+          </td>
+          <td  class="td-table">
+            <input [readonly]="!item.isEdit" class="input-name-champ" type="text" [(ngModel)]="item.parametre" placeholder="parametre">
+          </td>
+          <td   class="td-table th-img-bool">
+            <img  (click)="toggleItem(i)" class="icon-toggle"  [src]="item.isActif ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="  th-grp">
+            <div class="td-action ">
+              <img *ngIf="!item.isEdit" (click)="editor(i)"  src="assets/icon/tableau/pen.svg" alt="">
+              <img *ngIf="!item.isEdit" (click)="openDelete(i)"  src="assets/icon/tableau/delete.svg" alt="">
+
+              <img *ngIf="item.isEdit" (click)="validerEditor(i)" src="assets/icon/tableau/validedit.svg" alt="">
+              <img *ngIf="item.isEdit" (click)="annuleEdit(i)" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        <!--ADD OPTION-->
+        <tr    class="tr-table" *ngIf="isAdd">
+          <td  class="td-table th-met">
+            <input  class="input-name-champ" type="text" [(ngModel)]="addOption" placeholder="option">
+          </td>
+          <td  class="td-table">
+            <input  class="input-name-champ" type="text" [(ngModel)]="addParam" placeholder="parametre">
+          </td>
+          <td   class="td-table th-img-bool">
+            <img  (click)="addActivation()" class="icon-toggle"  [src]="addActive ? 'assets/icon/metric/actif.svg' : 'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="  th-grp">
+            <div class="td-action ">
+
+              <img (click)="validateAddNew()" src="assets/icon/tableau/validedit.svg" alt="">
+              <img (click)="annulerAdd()" src="assets/icon/tableau/annuledit.svg" alt="">
+            </div>
+          </td>
+        </tr>
+        <!--ADD OPTION-->
+
+        <tr  class="tr-table" *ngIf="!isAdd">
+          <td  class="td-table th-met th-grise">Nom de l'option d'authentification</td>
+          <td  class="td-table th-grise">Parametre</td>
+          <td   class="td-table th-img-bool">
+            <img  class="icon-toggle th-grise"  [src]="'assets/icon/metric/inactif.svg'" alt="">
+          </td>
+          <td  class="  th-grp">
+            <div class="td-action ">
+              <img (click)="openAdd()"  src="assets/icon/tableau/plus.svg" alt="">
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="popup-delete" *ngIf="isDeleting">
+  <div class="ctn-pop">
+    <div class="circle-delete" (click)="closeDelete()">
+      <img src="assets/icon/noir/close.png" alt="">
+    </div>
+    <div class="card-info">
+      <img src="assets/icon/noir/delete.png" alt="">
+      <span class="d-h1">Confirmation</span>
+      <span class="detail-tx">Voullez-vous vraiment supprimer l'option ?</span>
+      <button (click)="confirmDelete()">Confirmer</button>
+    </div>
+  </div>
+</div>

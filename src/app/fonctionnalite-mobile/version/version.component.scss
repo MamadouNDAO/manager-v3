@@ -1,0 +1,53 @@
+.th-table, .td-table{
+
+  //width: calc(100% / 11) !important;
+}
+
+.th-table{
+  text-align: center !important;
+}
+.td-table{
+  text-align: left !important;
+}
+
+
+
+.little-th{
+  width: 2% !important;
+}
+
+.little-th-2{
+  width: 2.5% !important;
+}
+
+.little-th-3{
+  width: 3% !important;
+}
+
+
+.little-th-4{
+  width: 4% !important;
+}
+
+.little-th-5{
+  width: 10% !important;
+}
+
+.table-principal{
+  margin-top: 20px !important;
+  border-top: none !important;
+}
+
+.th-img-bool{
+  text-align: center !important;
+}
+
+
+.th-grise:hover{
+  font-weight: initial !important;
+}
+
+.th-grise{
+  opacity: 0.2;
+  cursor: auto !important;
+}
